@@ -80,23 +80,14 @@ export default function ReviewDashboard({ review, repoMeta, fetchedFiles, onRese
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          borderBottom: '1px solid var(--grid-line)',
-          minHeight: '320px',
-        }}
+        className="grid grid-cols-1 lg:grid-cols-2 border-b border-[color:var(--grid-line)] min-h-[320px]"
       >
         {/* Left: score gauges */}
         <div
           style={{
-            padding: '40px 40px',
-            borderRight: '1px solid var(--grid-line)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            gap: '36px',
+            padding: '10vw 8vw',
           }}
+          className="flex flex-col justify-center gap-8 md:gap-9 border-b lg:border-b-0 lg:border-r border-[color:var(--grid-line)]"
         >
           {/* Top label */}
           <div className="text-label" style={{ color: 'var(--text-muted)' }}>
@@ -104,14 +95,7 @@ export default function ReviewDashboard({ review, repoMeta, fetchedFiles, onRese
           </div>
 
           {/* Main gauge + sub-gauges row */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '40px',
-              flexWrap: 'wrap',
-            }}
-          >
+          <div className="flex flex-wrap items-center gap-8 md:gap-10">
             <ScoreGauge score={review.overallScore} label="Overall Score" size={150} />
 
             {/* Sub-gauges */}
@@ -153,7 +137,7 @@ export default function ReviewDashboard({ review, repoMeta, fetchedFiles, onRese
         </div>
 
         {/* Right: river current image */}
-        <div style={{ position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', overflow: 'hidden' }} className="min-h-[200px] lg:min-h-0">
           <img
             src={imgCurrent}
             alt="Forest river current"
@@ -219,12 +203,7 @@ export default function ReviewDashboard({ review, repoMeta, fetchedFiles, onRese
 
       {/* ── Category cards grid ───────────────────────────── */}
       <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '0',
-          borderBottom: '1px solid var(--grid-line)',
-        }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-[color:var(--grid-line)]"
       >
         {[
           {
@@ -282,10 +261,8 @@ export default function ReviewDashboard({ review, repoMeta, fetchedFiles, onRese
         ].map(({ component }, i) => (
           <div
             key={i}
-            style={{
-              borderRight: i < 3 ? '1px solid var(--grid-line)' : 'none',
-              padding: '28px 24px',
-            }}
+            style={{ padding: '28px 24px' }}
+            className={`border-b last:border-b-0 md:border-b-0 ${i % 2 === 0 ? 'md:border-r' : ''} ${i < 2 ? 'md:border-b' : ''} lg:border-b-0 lg:border-r lg:last:border-r-0 border-[color:var(--grid-line)]`}
           >
             {component}
           </div>
@@ -303,7 +280,7 @@ export default function ReviewDashboard({ review, repoMeta, fetchedFiles, onRese
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9 }}
-          style={{ borderBottom: '1px solid var(--grid-line)' }}
+          className="border-b border-[color:var(--grid-line)]"
         >
           <summary
             style={{

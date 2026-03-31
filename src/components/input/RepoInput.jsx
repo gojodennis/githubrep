@@ -68,12 +68,7 @@ export default function RepoInput({ onSubmit, isLoading }) {
 
       {/* ── Hero body — split layout ────────────────────────── */}
       <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          minHeight: 'clamp(460px, 60vh, 640px)',
-          borderBottom: '1px solid var(--grid-line)',
-        }}
+        className="grid grid-cols-1 lg:grid-cols-2 min-h-[clamp(460px,60vh,640px)] border-b border-[color:var(--grid-line)]"
       >
         {/* Left — text + form */}
         <motion.div
@@ -82,11 +77,8 @@ export default function RepoInput({ onSubmit, isLoading }) {
           transition={{ duration: 0.6, delay: 0.1 }}
           style={{
             padding: 'clamp(32px, 5vw, 64px) clamp(24px, 4vw, 56px)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            borderRight: '1px solid var(--grid-line)',
           }}
+          className="flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-[color:var(--grid-line)] pb-12 lg:pb-0"
         >
           {/* Pre-label */}
           <div className="text-label" style={{ marginBottom: '20px' }}>
@@ -241,6 +233,7 @@ export default function RepoInput({ onSubmit, isLoading }) {
             position: 'relative',
             overflow: 'hidden',
           }}
+          className="min-h-[300px] lg:min-h-0"
         >
           <img
             src={heroLeaves}
@@ -309,11 +302,12 @@ export default function RepoInput({ onSubmit, isLoading }) {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.4 }}
         style={{
-          height: '180px',
+          minHeight: '180px',
           overflow: 'hidden',
           borderBottom: '1px solid var(--grid-line)',
           position: 'relative',
         }}
+        className="flex"
       >
         <img
           src={imgFoliage}
@@ -331,11 +325,8 @@ export default function RepoInput({ onSubmit, isLoading }) {
           style={{
             position: 'absolute',
             inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            padding: '0 24px',
           }}
+          className="grid grid-cols-2 sm:grid-cols-4 gap-4 items-center justify-items-center w-full px-4 md:px-6 py-2"
         >
           {[
             { label: 'Smart file selection', code: '01' },

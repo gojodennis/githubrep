@@ -18,12 +18,8 @@ export default function Header() {
         style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '0 24px',
-          height: '52px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
         }}
+        className="px-4 md:px-6 h-[52px] flex items-center justify-between"
       >
         {/* Left: Wordmark */}
         <div
@@ -51,6 +47,7 @@ export default function Header() {
             left: '50%',
             transform: 'translateX(-50%)',
           }}
+          className="hidden md:block"
         >
           AI Code Review
         </div>
