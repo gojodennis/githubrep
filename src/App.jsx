@@ -100,7 +100,7 @@ export default function App() {
               alignItems: 'center',
             }}
           >
-            <span className="text-label">GitLens</span>
+            <span className="text-label">GitLens by gojodennis</span>
             <span className="text-label">Creative · Review</span>
             <span className="text-label">{YEAR}</span>
           </div>

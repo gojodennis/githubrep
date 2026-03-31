@@ -58,7 +58,7 @@ export default function Header() {
         {/* Right: nav links */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
           <a
-            href="https://github.com"
+            href="https://github.com/gojodennis/githubrep"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -76,7 +76,7 @@ export default function Header() {
             GitHub
           </a>
           <a
-            href="https://www.nvidia.com/en-us/ai/"
+            href="https://gojodennis.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -91,7 +91,7 @@ export default function Header() {
             onMouseEnter={e => (e.target.style.color = 'var(--text-primary)')}
             onMouseLeave={e => (e.target.style.color = 'var(--text-muted)')}
           >
-            Nvidia NIM
+            Portfolio
           </a>
         </nav>
       </div>
