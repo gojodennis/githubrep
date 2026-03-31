@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────── */
+:root {
+  /* Backgrounds — warm near-black */
+  --bg-primary:   #0c0b09;
+  --bg-secondary: #121109;
+  --bg-strip:     #100f0d;
+
+  /* Grid lines — editorial hairlines */
+  --grid-line:       rgba(255, 255, 255, 0.09);
+  --grid-line-heavy: rgba(255, 255, 255, 0.18);
+
+  /* Text */
+  --text-primary:  #f0ebe3;
+  --text-secondary: rgba(240, 235, 227, 0.55);
+  --text-muted:    rgba(240, 235, 227, 0.28);
+
+  /* Accent — rationed rust */
+  --accent-rust:    #B84A2A;
+  --accent-rust-bg: rgba(184, 74, 42, 0.14);
+  --accent-rust-border: rgba(184, 74, 42, 0.35);
+
+  /* Score states — all expressed through desaturation, not hue-shift */
+  --score-high:   #c8bfa8;
+  --score-mid:    #a09580;
+  --score-low:    #B84A2A;
+
+  /* Typography */
+  --font-body:    'Space Mono', 'Courier New', monospace;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+
+  /* Type scale */
+  --text-display:  clamp(2.4rem, 6vw, 4.2rem);
+  --text-heading:  1rem;
+  --text-body:     0.78rem;
+  --text-label:    0.62rem;
+  --text-badge:    0.68rem;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* All radii: ZERO — brutalist */
+  --radius-none: 0px;
+
+  /* Transitions */
+  --transition: 0.18s ease;
+  --transition-slow: 0.38s ease;
+}
+
+/* ─── Base Reset ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.65;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--grid-line-heavy); border-radius: 0; }
+
+/* ─── Typography utilities ───────────────────────────────── */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.text-label {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Strip Card (replaces glass-card) ───────────────────── */
+.strip-card {
+  background: var(--bg-strip);
+  border: 1px solid var(--grid-line);
+  border-radius: 0;
+  transition: border-color var(--transition);
+}
+
+.strip-card:hover {
+  border-color: var(--grid-line-heavy);
+}
+
+/* Left-ruled accent card */
+.ruled-card {
+  background: var(--bg-strip);
+  border-left: 3px solid var(--grid-line-heavy);
+  border-top: 1px solid var(--grid-line);
+  border-right: 1px solid var(--grid-line);
+  border-bottom: 1px solid var(--grid-line);
+  border-radius: 0;
+  transition: border-left-color var(--transition);
+}
+
+.ruled-card:hover {
+  border-left-color: var(--accent-rust);
+}
+
+/* ─── Score Badge (rust stamp) ───────────────────────────── */
+.score-stamp {
+  display: inline-block;
+  background: var(--accent-rust);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: var(--text-badge);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 0;
+}
+
+.score-stamp-muted {
+  background: var(--accent-rust-bg);
+  color: var(--accent-rust);
+  border: 1px solid var(--accent-rust-border);
+}
+
+/* ─── Badge (label, not score) ───────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 0;
+  font-size: var(--text-label);
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+}
+
+.badge-dim {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--grid-line);
+}
+
+.badge-rust {
+  background: var(--accent-rust-bg);
+  color: var(--accent-rust);
+  border: 1px solid var(--accent-rust-border);
+}
+
+/* legacy compat — map old badge variants to new */
+.badge-cyan, .badge-violet, .badge-green, .badge-amber { 
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--grid-line);
+}
+.badge-red {
+  background: var(--accent-rust-bg);
+  color: var(--accent-rust);
+  border: 1px solid var(--accent-rust-border);
+}
+
+/* ─── Input ──────────────────────────────────────────────── */
+.glow-input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--grid-line-heavy);
+  border-left: 3px solid var(--grid-line-heavy);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  letter-spacing: 0.04em;
+  transition: border-color var(--transition);
+  border-radius: 0;
+  outline: none;
+}
+
+.glow-input:focus {
+  border-color: var(--grid-line-heavy);
+  border-left-color: var(--accent-rust);
+}
+
+.glow-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ─── Buttons ────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--accent-rust);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background var(--transition), opacity var(--transition);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #9e3e23;
+}
+
+.btn-primary:active:not(:disabled) {
+  opacity: 0.85;
+}
+
+.btn-primary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--grid-line);
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  color: var(--text-primary);
+  border-color: var(--grid-line-heavy);
+}
+
+.btn-secondary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ─── Progress / score bar (flat editorial line) ─────────── */
+.progress-bar {
+  height: 2px;
+  background: var(--grid-line);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent-rust);
+  border-radius: 0;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Score colors (legacy compat) ──────────────────────── */
+.score-excellent, .score-good { color: var(--score-high); }
+.score-fair  { color: var(--score-mid); }
+.score-poor  { color: var(--score-low); }
+
+/* ─── Divider ────────────────────────────────────────────── */
+.gradient-divider, hr {
+  height: 1px;
+  background: var(--grid-line);
+  border: none;
+  border-radius: 0;
+}
+
+/* ─── Image strip ────────────────────────────────────────── */
+.img-strip {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  filter: brightness(0.7) contrast(1.1);
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+@keyframes fade-in-strip {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* shimmer-btn: kept for compat but stripped of glow */
+.shimmer-btn { position: relative; }
+.animate-fade-up { animation: fade-up 0.5s ease-out forwards; }
+.animate-spin-slow { animation: none; }
+.animate-pulse-glow { animation: none; }
+.animate-bounce-subtle { animation: none; }
+
+/* ─── bg-grid: remove the blueprint grid, use plain bg ──── */
+.bg-grid {
+  background-image: none;
+  background-color: var(--bg-primary);
+}
