@@ -7,11 +7,10 @@
 import axios from 'axios';
 import { parseReview } from '../utils/parseReview';
 
-// Use Vite proxy in dev (/api/nvidia → https://integrate.api.nvidia.com/v1)
-// This avoids browser CORS restrictions on the NVIDIA API.
-// In production, replace with a serverless function proxy.
-const NVIDIA_API_URL = '/api/nvidia/chat/completions';
-const NVIDIA_API_KEY = import.meta.env.VITE_NVIDIA_API_KEY;
+// Local Dev: uses vite proxy. Production (Vercel): uses the serverless proxy.
+const isDev = import.meta.env.DEV;
+const NVIDIA_API_URL = isDev ? '/api/nvidia/chat/completions' : '/api/review';
+const NVIDIA_API_KEY = isDev ? import.meta.env.VITE_NVIDIA_API_KEY : '';
 const MODEL = 'meta/llama-4-maverick-17b-128e-instruct';
 
 // Maximum characters of file content to send (stay within context window)
@@ -99,8 +98,10 @@ function buildUserMessage(owner, repo, files) {
  * @returns {object} parsed review
  */
 export async function reviewWithNvidia(repoData, onStatus = () => {}) {
-  if (!NVIDIA_API_KEY) {
-    throw new Error('NVIDIA API key not found. Please set VITE_NVIDIA_API_KEY in your .env file.');
+  // Only check for the Frontend API key in local development. 
+  // In production, the Vercel Serverless proxy securely handles the key.
+  if (isDev && !NVIDIA_API_KEY) {
+    throw new Error('Local dev requires VITE_NVIDIA_API_KEY in your .env file.');
   }
 
   const { owner, repo, files } = repoData;
@@ -111,6 +112,11 @@ export async function reviewWithNvidia(repoData, onStatus = () => {}) {
 
   let response;
   try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (NVIDIA_API_KEY) {
+      headers.Authorization = `Bearer ${NVIDIA_API_KEY}`;
+    }
+
     response = await axios.post(
       NVIDIA_API_URL,
       {
@@ -125,10 +131,7 @@ export async function reviewWithNvidia(repoData, onStatus = () => {}) {
         stream: false,
       },
       {
-        headers: {
-          Authorization: `Bearer ${NVIDIA_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
+        headers,
         timeout: 120_000,        // 2 minute timeout for large repos
       }
     );
